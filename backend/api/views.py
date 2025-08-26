@@ -9,6 +9,7 @@ from djoser.views import UserViewSet as DjoserViewSet
 from rest_framework import filters, permissions, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
+
 from api.filters import RecipesFilter
 from api.permissions import IsAuthorOrReadOnly
 from api.serializers import (AvatarSerializer, FavoriteSerializer,
