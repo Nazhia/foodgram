@@ -1,7 +1,6 @@
 from django.http import HttpResponse, HttpResponsePermanentRedirect
 from django.shortcuts import get_object_or_404
 from django.utils.http import base36_to_int
-
 from recipes.models import Recipe
 
 
