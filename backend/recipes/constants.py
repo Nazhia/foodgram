@@ -1,0 +1,11 @@
+class Constants:
+    """Класс для хранения констант."""
+
+    MAX_TITLE_LENGTH = 20
+    MIN_TIME = MIN_AMOUNT = 1
+    MAX_NAME_LENGTH = 256
+    MAX_TAG_NAME_LENGTH = 32
+    MAX_INGREDIENT_NAME_LENGTH = 128
+    MAX_INGREDIENT_MEASUREMENT_LENGTH = 64
+    RECIPES_COUNT = 0
+    MAX_TIME = 1500
