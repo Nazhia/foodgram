@@ -28,6 +28,7 @@ services:
   nginx:
     container_name: foodgram-proxy
     image: nazhia/foodgram_nginx
+    env_file: .env
     ports:
       - 8000:80
     volumes:
