@@ -1,10 +1,10 @@
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.core.exceptions import ValidationError
 from django.db import models
 
 from users.constants import LIMIT_EMAIL, LIMIT_USERNAME
-from users.validators import username_validator
 
 
 class User(AbstractUser):
@@ -16,7 +16,7 @@ class User(AbstractUser):
         'Имя пользователя',
         max_length=LIMIT_USERNAME,
         unique=True,
-        validators=(username_validator,),
+        validators=(UnicodeUsernameValidator(),),
         error_messages={
             'unique': 'Пользователь с таким именем уже существует!',
         },
@@ -41,7 +41,7 @@ class User(AbstractUser):
         'Аватар',
         upload_to='users/%Y/%m/%d/',
         blank=True,
-        null=True
+        default=''
     )
 
     class Meta:

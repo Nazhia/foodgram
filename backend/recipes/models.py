@@ -68,11 +68,13 @@ class RecipeIngredient(models.Model):
 
     recipe = models.ForeignKey(
         'Recipe',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name='recipe_ingredients'
     )
     ingredient = models.ForeignKey(
         Ingredient,
         on_delete=models.CASCADE,
+        related_name='recipe_ingredients'
     )
     amount = models.PositiveIntegerField(
         'Количество ингредиентов',
@@ -83,7 +85,6 @@ class RecipeIngredient(models.Model):
     )
 
     class Meta:
-        default_related_name = 'recipe_ingredients'
         constraints = (
             models.UniqueConstraint(
                 fields=('recipe', 'ingredient'),
@@ -103,7 +104,6 @@ class Recipe(AbstractTitle):
 
     tags = models.ManyToManyField(
         Tag,
-        related_name='recipes',
         verbose_name='Теги рецепта'
     )
     author = models.ForeignKey(
@@ -139,7 +139,6 @@ class Recipe(AbstractTitle):
     class Meta(AbstractTitle.Meta):
         verbose_name = 'рецепт'
         verbose_name_plural = 'Рецепты'
-        default_related_name = 'recipes'
         ordering = ('-pub_date',)
 
 
@@ -150,11 +149,13 @@ class AbstractUserRecipe(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         verbose_name='Пользователь',
+        related_name='%(class)ss'
     )
     recipe = models.ForeignKey(
         Recipe,
         on_delete=models.CASCADE,
         verbose_name='Рецепт',
+        related_name='%(class)ss'
     )
 
     class Meta:
@@ -180,7 +181,6 @@ class ShoppingCart(AbstractUserRecipe):
     class Meta(AbstractUserRecipe.Meta):
         verbose_name = 'список покупок'
         verbose_name_plural = 'Списки покупок'
-        default_related_name = 'shopping_carts'
 
 
 class Favorite(AbstractUserRecipe):
@@ -189,4 +189,3 @@ class Favorite(AbstractUserRecipe):
     class Meta(AbstractUserRecipe.Meta):
         verbose_name = 'рецепт в избранном'
         verbose_name_plural = 'Рецепты в избранном'
-        default_related_name = 'favorites'

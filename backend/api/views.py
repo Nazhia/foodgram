@@ -197,17 +197,15 @@ class RecipesViewSet(viewsets.ModelViewSet):
         )
 
     def create_relation(self, request, serializer_cls, pk):
-        recipe = get_object_or_404(Recipe, pk=pk)
-        data = {'user': request.user.id, 'recipe': recipe.id}
+        data = {'user': request.user.id, 'recipe': pk}
         serializer = serializer_cls(data=data, context={'request': request})
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def delete_relation(self, request, model, pk):
-        recipe = get_object_or_404(Recipe, pk=pk)
         deleted, _ = model.objects.filter(
-            user=request.user, recipe=recipe
+            user=request.user, recipe=pk
         ).delete()
         return Response(
             status=status.HTTP_204_NO_CONTENT
